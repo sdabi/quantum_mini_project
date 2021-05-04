@@ -5,9 +5,14 @@ from qiskit import *
 from qiskit.tools.visualization import plot_histogram
 from qiskit.tools.monitor import job_monitor
 
+# simulator instance
 sim = Aer.get_backend('qasm_simulator')
 
-# circle creation
+# circle creation:
+# applying Hadamrd on every input qubit, and creating |-> state as input.
+# creating function logic - "and between all qubits", and useing phase kickback
+# applying Hadamrd on every ouput qubit
+# measure qubit number 0
 circs = []
 for q_num in range(2,10):
     circ = QuantumCircuit((q_num*2),q_num)
@@ -31,6 +36,7 @@ for q_num in range(2,10):
 
 circs[1].draw()
 
+# running each circle 1 Million times
 results = []
 for circ in circs:
     res = execute(circ,backend=sim, shots=1024*1024).result()
